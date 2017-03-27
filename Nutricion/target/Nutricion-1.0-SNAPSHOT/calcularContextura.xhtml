@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./Templates/NutricionTemplate.xhtml">
+
+
+
+
+            <ui:define name="content">
+                <h:form>
+                    Edad: <h:inputText value="#{contexturaBean.edad}" />
+                    <h:selectOneRadio value="#{contexturaBean.sexo}">
+                        <f:selectItem itemValue="H" itemLabel="Hombre"/>
+                        <f:selectItem itemValue="M" itemLabel="Mujer"/>
+                    </h:selectOneRadio>
+                    Talla: <h:inputText value="#{contexturaBean.talla}" />
+                    <br/>Cia. Muñeca<h:inputText value="#{contexturaBean.ciaMuneca}" />
+                    <br/><h:commandButton action="#{contexturaBean.calcularBiotipo}" value="Calcular"/>
+                    <br/>
+                    <br/><h:outputText value="#{contexturaBean.resultado}" style="color: red"/>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

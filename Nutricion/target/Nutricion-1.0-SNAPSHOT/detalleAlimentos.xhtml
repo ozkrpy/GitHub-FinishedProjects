@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./Templates/NutricionTemplate.xhtml">
+
+            <ui:define name="top">
+                Detalle del alimento
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Codigo:"/>          <h:outputText value="#{alimentosBean.detalle.codigoAlimento}" title="ID"/>
+                        <h:outputText value="Descripcion:"/>     <h:outputText value="#{alimentosBean.detalle.descripcionAlimento}" title="Descripcion"/>
+                        <h:outputText value="Tipo Alimento:"/>   <h:outputText value="#{alimentosBean.detalle.tipoAlimento.descripcionTipoAlimento}" title="Tipo Alimento"/>
+                        <h:outputText value="Medida Casera:"/>   <h:outputText value="#{alimentosBean.detalle.medidaCasera} #{alimentosBean.detalle.medidaCaseraUnidad}" title="MedidaCasera"/>
+                        <h:outputText value="Medida Real:"/>     <h:outputText value="#{alimentosBean.detalle.medidaReal} #{alimentosBean.detalle.medidaRealUnidad}" title="MedidaEstandarizada"/>
+                        <h:outputText value="Hidratos Carbono:"/><h:outputText value="#{alimentosBean.detalle.hidratosCarbono} #{alimentosBean.detalle.unidadMedidaHidratosCarbono}" title="HidratosCarbono"/>
+                        <h:outputText value="Proteina:"/>        <h:outputText value="#{alimentosBean.detalle.proteina} #{alimentosBean.detalle.unidadMedidaProteina}" title="Proteina"/>
+                        <h:outputText value="Grasa:"/>           <h:outputText value="#{alimentosBean.detalle.grasa} #{alimentosBean.detalle.unidadMedidaGrasa}" title="Grasa"/>
+                        <h:outputText value="Sodio:"/>           <h:outputText value="#{alimentosBean.detalle.sodio} #{alimentosBean.detalle.unidadMedidaSodio}" title="Sodio"/>
+                        <h:outputText value="Potasio:"/>         <h:outputText value="#{alimentosBean.detalle.potasio} #{alimentosBean.detalle.unidadMedidaPotasio}" title="Potasio"/>
+                        <h:outputText value="Fosforo:"/>         <h:outputText value="#{alimentosBean.detalle.fosforo} #{alimentosBean.detalle.unidadMedidaFosforo}" title="Fosforo"/>
+                        <h:outputText value="Calcio:"/>          <h:outputText value="#{alimentosBean.detalle.calcio} #{alimentosBean.detalle.unidadMedidaCalcio}" title="Calcio"/>
+                        <h:outputText value="Hierro:"/>          <h:outputText value="#{alimentosBean.detalle.hierro} #{alimentosBean.detalle.unidadMedidaHierro}" title="Hierro"/>
+                        <h:outputText value="Colesterol:"/>      <h:outputText value="#{alimentosBean.detalle.colesterol} #{alimentosBean.detalle.unidadMedidaColesterol}" title="Colesterol"/>
+                        <h:outputText value="Purinas:"/>         <h:outputText value="#{alimentosBean.detalle.purinas} #{alimentosBean.detalle.unidadMedidaPurinas}" title="Purinas"/>
+                        <h:outputText value="Fibra:"/>           <h:outputText value="#{alimentosBean.detalle.fibra} #{alimentosBean.detalle.unidadMedidaFibra}" title="Fibra"/>
+                        <h:outputText value="Agua:"/>            <h:outputText value="#{alimentosBean.detalle.agua} #{alimentosBean.detalle.unidadMedidaAgua}" title="Agua"/>
+                        <h:outputText value="Calorias:"/>        <h:outputText value="#{alimentosBean.detalle.calorias}" title="Calorias"/>
+                    </h:panelGrid>
+
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./Templates/NutricionTemplate.xhtml">
+
+            <ui:define name="top">
+                Pacientes
+            </ui:define>
+
+            <ui:define name="content">
+                    <h:form>
+                        <h1><h:outputText value="List"/></h1>
+                        <h:dataTable value="#{pacienteBean.listaPacientes}" var="item" style="font-size: 10px" border="1">
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="ID"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codigoPaciente}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Nombre Paciente"/>
+                                </f:facet>
+                                <h:outputText value="#{item.nombre} #{item.apellido}"/>
+                            </h:column>
+                            
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Sexo"/>
+                                </f:facet>
+                                <h:outputText value="#{item.sexo}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Talla"/>
+                                </f:facet>
+                                <h:outputText value="#{item.talla}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Estado Civil"/>
+                                </f:facet>
+                                <h:outputText value="#{item.estadoCivil}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="FechaNacimiento"/>
+                                </f:facet>
+                                <h:outputText value="#{item.fechaNacimiento}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                                </h:outputText>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="PesoActual"/>
+                                </f:facet>
+                                <h:outputText value="#{item.pesoActual}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="PesoHabitual"/>
+                                </f:facet>
+                                <h:outputText value="#{item.pesoHabitual}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="PesoAjusta"/>
+                                </f:facet>
+                                <h:outputText value="#{item.pesoAjusta}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Informacion"/>
+                                </f:facet>
+                                <h:commandButton action="#{pacienteBean.recuperaDetalles(item.codigoPaciente)}" value="Ver detalle"/>
+                            </h:column>
+                        </h:dataTable>
+                    </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

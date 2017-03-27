@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./Templates/NutricionTemplate.xhtml">
+
+
+
+
+
+            <ui:define name="content">
+                <h:form>
+                    <h1><h:outputText value="List"/></h1>
+                    <h:dataTable value="#{alimentosBean.listaAlimentos}" var="item">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Codigo"/>
+                            </f:facet>
+                            <h:outputText value="#{item.codigoAlimento}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Descripcion Alimento"/>
+                            </f:facet>
+                            <h:outputText value="#{item.descripcionAlimento}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Tipo Alimento"/>
+                            </f:facet>
+                            <h:outputText value="#{item.tipoAlimento.descripcionTipoAlimento}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Ver"/>
+                            </f:facet>
+                            <h:commandButton value="Detalles" action="#{alimentosBean.recuperaDetalles(item.codigoAlimento)}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

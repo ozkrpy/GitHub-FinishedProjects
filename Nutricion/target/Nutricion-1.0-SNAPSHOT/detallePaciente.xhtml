@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./Templates/NutricionTemplate.xhtml">
+
+            <ui:define name="top">
+                Detalles del paciente
+            </ui:define>
+
+            <ui:define name="content">
+                <h2><h:outputText value="#{pacienteBean.detalle.nombre} #{pacienteBean.detalle.apellido}"/> </h2>
+                <h:panelGrid columns="2">
+                    <h:outputText value="Peso Saludable: "/> <h:outputText value="#{pacienteBean.detalle.pesoSaludable}"/>
+                    <h:outputText value="Porcentaje Peso Ideal: "/> <h:outputText value="#{pacienteBean.detalle.porcentajePesoIdeal}"/>
+                    <h:outputText value="Imc: "/> <h:outputText value="#{pacienteBean.detalle.imc}"/>
+                    <h:outputText value="Circunferencia Muneca: "/> <h:outputText value="#{pacienteBean.detalle.ciaMuneca}"/>
+                    <h:outputText value="Circunferencia Brazo: "/> <h:outputText value="#{pacienteBean.detalle.ciaBrazo}"/>
+                    <h:outputText value="Biotipo: "/> <h:outputText value="#{pacienteBean.detalle.biotipo}"/>
+                    <h:outputText value="Antecedente Obesidad: "/> <h:outputText value="#{pacienteBean.detalle.antecedenteObesidad}"/>
+                    <h:outputText value="Antecedente Cardiopatias: "/> <h:outputText value="#{pacienteBean.detalle.antecedenteCardiopatias}"/>
+                    <h:outputText value="Antecedente Hta: "/> <h:outputText value="#{pacienteBean.detalle.antecedenteHta}"/>
+                    <h:outputText value="Antecedente Diabetes: "/> <h:outputText value="#{pacienteBean.detalle.antecedenteDiabetes}"/>
+                    <h:outputText value="Medicacion: "/> <h:outputText value="#{pacienteBean.detalle.medicacion}"/>
+                    <h:outputText value="Diagnostico Medico: "/> <h:outputText value="#{pacienteBean.detalle.diagnosticoMedico}"/>
+                    <h:outputText value="Diagnostico Nutricional: "/> <h:outputText value="#{pacienteBean.detalle.diagnosticoNutricional}"/>
+                    <h:outputText value="Glicemia Basal: "/> <h:outputText value="#{pacienteBean.detalle.laboratorioGlicemiaBasal}"/>
+                    <h:outputText value="Creatinina: "/> <h:outputText value="#{pacienteBean.detalle.laboratorioCreatinina}"/>
+                    <h:outputText value="Proteinas Totales: "/> <h:outputText value="#{pacienteBean.detalle.laboratorioProteinasTotales}"/>
+                    <h:outputText value="Urea: "/> <h:outputText value="#{pacienteBean.detalle.laboratorioUrea}"/>
+                    <h:outputText value="Acido Urico: "/> <h:outputText value="#{pacienteBean.detalle.laboratorioAcidoUrico}"/>
+                    <h:outputText value="Proteinuria: "/> <h:outputText value="#{pacienteBean.detalle.laboratorioProteinuria}"/>
+                    <h:outputText value="Albumina: "/> <h:outputText value="#{pacienteBean.detalle.laboratorioAlbumina}"/>
+                    <h:outputText value="Triglicerios: "/> <h:outputText value="#{pacienteBean.detalle.laboratorioTriglicerios}"/>
+                    <h:outputText value="Colesterol Total: "/> <h:outputText value="#{pacienteBean.detalle.laboratorioColesterolTotal}"/>
+                    <h:outputText value="Ldl: "/> <h:outputText value="#{pacienteBean.detalle.laboratorioLdl}"/>
+                    <h:outputText value="Hdl: "/> <h:outputText value="#{pacienteBean.detalle.laboratorioHdl}"/>
+                    <h:outputText value="Glucosa: "/> <h:outputText value="#{pacienteBean.detalle.laboratorioGlucosa}"/>
+                    <h:outputText value="Hb: "/> <h:outputText value="#{pacienteBean.detalle.laboratorioHb}"/>
+                    <h:outputText value="Hematocrito: "/> <h:outputText value="#{pacienteBean.detalle.laboratorioHematocrito}"/>
+                    <h:outputText value="GlobulosRojos: "/> <h:outputText value="#{pacienteBean.detalle.laboratorioGlobulosRojos}"/>
+                    <h:outputText value="Potasio: "/> <h:outputText value="#{pacienteBean.detalle.laboratorioPotasio}"/>
+                    <h:outputText value="Ci: "/> <h:outputText value="#{pacienteBean.detalle.laboratorioCi}"/>
+                    <h:outputText value="Na: "/> <h:outputText value="#{pacienteBean.detalle.laboratorioNa}"/>
+                    <h:outputText value="Globulos Blancos: "/> <h:outputText value="#{pacienteBean.detalle.laboratorioGlobulosBlancos}"/>
+                    <h:outputText value="Hba: "/> <h:outputText value="#{pacienteBean.detalle.laboratorioHba}"/>
+                </h:panelGrid>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

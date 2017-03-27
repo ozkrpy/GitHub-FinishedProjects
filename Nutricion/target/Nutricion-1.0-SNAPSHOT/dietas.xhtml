@@ -1,0 +1,475 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Dietas</title>
+        <link rel="stylesheet" href="resources/css/style.css" type="text/css"/>
+    </h:head>
+    <h:body>
+        <h:form prependId="false" id="formularioAntropometria" style="font-size: 10px">
+            <h1><h:outputText value="Antropometria - Evaluacion Nutricional" /></h1>
+            <h:panelGrid columns="2">
+                <h:panelGrid columns="2">
+                    <h:outputText value="Paciente: "/>
+                    <h:selectOneMenu id="idPaciente" value="#{tablaAlimentosBean.codigoPaciente}" style="font-size: 10px">
+                        <f:selectItem itemLabel="Seleccionar paciente." itemValue="0" />
+                        <f:selectItems value="#{tablaAlimentosBean.listaDesplegablePacientes}" var="itemPaciente" itemLabel="#{itemPaciente.descripcionAlimento}" itemValue="#{itemPaciente.codigoAlimento}"/>
+                        <f:ajax listener="#{tablaAlimentosBean.changeListenerCodigoPaciente}" 
+                                render="formularioAntropometria : idDieta : formularioDetalleDietaPAVB : formularioDetalleDietaNoPAVB" 
+                                execute="onClick" />
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="nuevoPaciente" value="Agregar nuevo paciente." style="font-size: 10px"/>
+            </h:panelGrid>
+            <h:panelGrid id="datosDetallePaciente" columns="1" rendered="#{tablaAlimentosBean.codigoPaciente ne 0}">
+                <h:panelGrid columns="4" >
+                    <b>Nombre:</b> <h:outputText value="#{tablaAlimentosBean.paciente.nombre} #{tablaAlimentosBean.paciente.apellido}"/>
+                    <b>Edad:</b> <h:outputText value="#{tablaAlimentosBean.edad} años"/>
+                    <b>Peso actual:</b> <h:outputText value="#{tablaAlimentosBean.paciente.pesoActual} Kg." />
+                    <b>Peso ajustado:</b> <h:outputText value="#{tablaAlimentosBean.paciente.pesoAjusta} Kg." />
+                    <b>Peso ideal:</b> <h:outputText value="#{tablaAlimentosBean.paciente.pesoSaludable} Kg."/>
+                    <b>Peso Ideal (%):</b> 
+                    <h:panelGrid columns="2"> 
+                        <h:outputText value="#{tablaAlimentosBean.paciente.porcentajePesoIdeal}">
+                            <f:convertNumber pattern="###0.00" />
+                        </h:outputText>
+                        <h:outputText value="% (#{tablaAlimentosBean.tipoPorcentajePI})"/>
+                    </h:panelGrid>
+
+                </h:panelGrid>
+                <h:panelGrid columns="4">
+                    <b>IMC:</b> 
+                    <h:panelGrid columns="2"> 
+                        <h:outputText value="#{tablaAlimentosBean.paciente.imc}">
+                            <f:convertNumber pattern="###0.00" />
+                        </h:outputText>
+                        <h:outputText value="(#{tablaAlimentosBean.tipoImc})"/>
+                    </h:panelGrid>
+                    <b>Biotipo:</b> <h:outputText value="Contextura #{tablaAlimentosBean.paciente.biotipo}"/>
+                </h:panelGrid>
+                <h:panelGrid columns="4"> 
+                    <b>Antecedentes Cardiopatias:</b> <h:outputText value="#{tablaAlimentosBean.paciente.antecedenteCardiopatias ? 'SI' : 'NO'}" />
+                    <b>Antecedentes Diabetes:</b> <h:outputText value="#{tablaAlimentosBean.paciente.antecedenteDiabetes ? 'SI' : 'NO'}" />
+                    <b>Antecedentes Obesidad:</b> <h:outputText value="#{tablaAlimentosBean.paciente.antecedenteObesidad ? 'SI' : 'NO'}" />
+                    <b>Antecedentes HTA:</b> <h:outputText value="#{tablaAlimentosBean.paciente.antecedenteHta ? 'SI' : 'NO'}" />
+                </h:panelGrid>
+                <h:panelGrid columns="2"> 
+                    <b>Dx. Medico</b> <h:outputText value="#{tablaAlimentosBean.paciente.diagnosticoMedico}"/>
+                    <b>Dx. Nutricional</b> <h:outputText value="#{tablaAlimentosBean.paciente.diagnosticoNutricional}"/>
+                </h:panelGrid>
+            </h:panelGrid>
+        </h:form>
+        <h:form prependId="false" id="formularioCalculos" style="font-size: 10px">
+            <h1><h:outputText value="Distribucion de alimento" /></h1>
+            <h:panelGrid columns="6" border="1" >
+                <h:outputText value="Elemento"/>
+                <h:outputText value="Valor"/>
+                <h:outputText value="Minimo"/>
+                <h:outputText value="Maximo"/>
+                <h:outputText value="Segun Alimentos"/>
+                <h:outputText value="Kcal. Total"/>
+
+                <h:outputText value="HC"/>
+                <p:inputText value="#{tablaAlimentosBean.HC}" style="width: 50px; font-size: 10px" >
+                    <f:ajax listener="#{tablaAlimentosBean.changeListenerCampos}" event="change" render="outMinHC : outMaxHC : outCalculoHC"/>
+                </p:inputText>
+                <h:outputText id="outMinHC" value="#{tablaAlimentosBean.minHC}" style="#{tablaAlimentosBean.cambiaColorHCmin() eq true ? 'color: #D20005; background: #ffcccc' : 'color: #000; background: #ffffff'}"/>
+                <h:outputText id="outMaxHC" value="#{tablaAlimentosBean.maxHC}" style="#{tablaAlimentosBean.cambiaColorHCmax() eq true ? 'color: #D20005; background: #ffcccc' : 'color: #000; background: #ffffff'}"/>
+                <h:outputText id="outCalculoHC" value="#{tablaAlimentosBean.sumatoriaHidratosCarbono}" style="#{tablaAlimentosBean.cambiaColorHCcalculado() eq true ? 'color: #009900; background: #99ff99' : 'color: #000; background: #ffffff'}" >
+                    <f:convertNumber pattern="#0.00" />
+                </h:outputText>
+                <h:outputText id="outKcalHC" value="#{tablaAlimentosBean.kcalHC}" >
+                    <f:convertNumber pattern="#0.00" />
+                </h:outputText>
+
+                <h:outputText value="Proteina"/>
+                <p:inputText value="#{tablaAlimentosBean.proteina}" style="width: 50px; font-size: 10px">
+                    <f:ajax listener="#{tablaAlimentosBean.changeListenerCampos}" event="change" render="outMinProteina : outMaxProteina : outCalculoProteina" />
+                </p:inputText>
+                <h:outputText id="outMinProteina" value="#{tablaAlimentosBean.minProteina}" style="#{tablaAlimentosBean.cambiaColorProteinaMin() eq true ? 'color: #D20005; background: #ffcccc' : 'color: #000; background: #ffffff'}"/>
+                <h:outputText id="outMaxProteina" value="#{tablaAlimentosBean.maxProteina}" style="#{tablaAlimentosBean.cambiaColorProteinaMax() eq true ? 'color: #D20005; background: #ffcccc' : 'color: #000; background: #ffffff'}"/>
+                <h:outputText id="outCalculoProteina" value="#{tablaAlimentosBean.sumatoriaProteina}" style="#{tablaAlimentosBean.cambiaColorProteinaCalculado() eq true ? 'color: #009900; background: #99ff99' : 'color: #000; background: #ffffff'}" >
+                    <f:convertNumber pattern="#0.00" />
+                </h:outputText>
+                <h:outputText id="outKcalProteina" value="#{tablaAlimentosBean.kcalProteina}" >
+                    <f:convertNumber pattern="#0.00" />
+                </h:outputText>
+
+                <h:outputText value="Grasas"/>
+                <p:inputText value="#{tablaAlimentosBean.grasa}" style="width: 50px; font-size: 10px">
+                    <f:ajax listener="#{tablaAlimentosBean.changeListenerCampos}" event="change" render="outMinGrasa : outMaxGrasa : outCalculoGrasa" />
+                </p:inputText>
+                <h:outputText id="outMinGrasa" value="#{tablaAlimentosBean.minGrasa}" style="#{tablaAlimentosBean.cambiaColorGrasaMin() eq true ? 'color: #D20005; background: #ffcccc' : 'color: #000; background: #ffffff'}"/>
+                <h:outputText id="outMaxGrasa" value="#{tablaAlimentosBean.maxGrasa}" style="#{tablaAlimentosBean.cambiaColorGrasaMax() eq true ? 'color: #D20005; background: #ffcccc' : 'color: #000; background: #ffffff'}"/>
+                <h:outputText id="outCalculoGrasa" value="#{tablaAlimentosBean.sumatoriaGrasa}" style="#{tablaAlimentosBean.cambiaColorGrasaCalculado() eq true ? 'color: #009900; background: #99ff99' : 'color: #000; background: #ffffff'}" >
+                    <f:convertNumber pattern="#0.00" />
+                </h:outputText>
+                <h:outputText id="outKcalGrasa" value="#{tablaAlimentosBean.kcalGrasa}" >
+                    <f:convertNumber pattern="#0.00" />
+                </h:outputText>
+
+                <h:outputText value="Fibra"/>
+                <p:inputText value="#{tablaAlimentosBean.fibra}" style="width: 50px; font-size: 10px">
+                    <f:ajax listener="#{tablaAlimentosBean.changeListenerCampos}" event="change" render="outMinFibra : outMaxFibra : outCalculoFibra" />
+                </p:inputText>
+                <h:outputText id="outMinFibra" value="#{tablaAlimentosBean.minFibra}" style="#{tablaAlimentosBean.cambiaColorFibraMin() eq true ? 'color: #D20005; background: #ffcccc' : 'color: #000; background: #ffffff'}"><f:convertNumber pattern="#0.00" /></h:outputText>
+                <h:outputText id="outMaxFibra" value="#{tablaAlimentosBean.maxFibra}" style="#{tablaAlimentosBean.cambiaColorFibraMax() eq true ? 'color: #D20005; background: #ffcccc' : 'color: #000; background: #ffffff'}"><f:convertNumber pattern="#0.00" /></h:outputText>
+                <h:outputText id="outCalculoFibra" value="#{tablaAlimentosBean.sumatoriaFibra}" style="#{tablaAlimentosBean.cambiaColorFibraCalculado() eq true ? 'color: #009900; background: #99ff99' : 'color: #000; background: #ffffff'}">
+                    <f:convertNumber pattern="#0.00" />
+                </h:outputText>
+                <h:outputText id="outKcalFibra" value="#{tablaAlimentosBean.kcalFibra}" >
+                    <f:convertNumber pattern="#0.00" />
+                </h:outputText>            
+
+            </h:panelGrid>
+
+        </h:form>
+        <br/>
+        <h:form prependId="false" id="formularioAlimentos" style="font-size: 10px">
+            <h1><h:outputText value="Alimentos" /></h1>
+            <h:outputText value="Dieta nro.: "/>
+            <h:selectOneMenu id="idDieta" value="#{tablaAlimentosBean.codigoDieta}" style="font-size: 10px">
+                <f:selectItem itemLabel="Nueva Dieta" itemValue="0" />
+                <f:selectItems value="#{tablaAlimentosBean.listaDesplegableDietas}" var="itemDieta" itemLabel="#{itemDieta}" itemValue="#{itemDieta}"/>
+                <f:ajax listener="#{tablaAlimentosBean.changeListenerCodigoDieta}" 
+                        render="formularioDetalleDietaPAVB : formularioDetalleDietaNoPAVB : formularioCalculos : formularioAntropometria : nombrePaciente" 
+                        execute="change" />
+            </h:selectOneMenu>
+            <h:outputText value="Cantidad: "/>
+            <h:selectOneMenu value="#{tablaAlimentosBean.cantidadNuevoAlimentoPAVB}" style="font-size: 10px">
+                <f:selectItem itemLabel="Cantidad" itemValue="0" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="3" itemValue="3" />
+                <f:selectItem itemLabel="4" itemValue="4" />
+                <f:selectItem itemLabel="5" itemValue="5" />
+            </h:selectOneMenu>
+            <h:selectOneMenu value="#{tablaAlimentosBean.codigoAlimentoSeleccionado}" style="font-size: 10px">
+                <f:selectItem itemLabel="Seleccionar Alimento" itemValue="0" />
+                <f:selectItems value="#{tablaAlimentosBean.listaDesplegableAlimentosPAVB}" var="listaAlimento" itemLabel="#{listaAlimento.descripcionAlimento}" itemValue="#{listaAlimento.codigoAlimento}" />
+            </h:selectOneMenu>
+            <h:commandButton action="#{tablaAlimentosBean.agregarAlimentoDieta}" value="Agregar Alimento" style="font-size: 10px"/>
+        </h:form>
+        <h:form prependId="false" id="formularioDetalleDietaPAVB">
+            <h4><h:outputText value="Alimentos PAVB"/></h4>
+            <h:dataTable value="#{tablaAlimentosBean.tablaAlimentos}" 
+                         var="item" 
+                         border="1" 
+                         style="font-size: 10px">
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Unidad"/>
+                    </f:facet>
+                    <h:outputText rendered="#{tablaAlimentosBean.modificarDieta ne item}" value="#{item.datosDieta.cantidadAlimento}"/>
+                    <h:inputText id="cantidadModificada" 
+                                 rendered="#{tablaAlimentosBean.modificarDieta eq item}" 
+                                 value="#{tablaAlimentosBean.cantidadAlimentoModificado}"
+                                 style="font-size: 10px">
+                        <f:validateDoubleRange minimum="1" />
+                    </h:inputText><h:message for="cantidadModificada"  />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Descripcion"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.descripcionAlimento}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="item"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosDieta.dietaPK.numeroItem}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Tipo"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.tipoAlimento.descripcionTipoAlimento}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Med.Casera"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.medidaCasera}"/> #{item.datosAlimento.medidaCaseraUnidad}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Cantidad"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.medidaReal}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.medidaRealUnidad}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="HC"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.hidratosCarbono}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.unidadMedidaHidratosCarbono}
+                    <f:facet name="footer">
+                        <h:outputText value="#{tablaAlimentosBean.sumatoriaHidratosCarbonoPAVB}"><f:convertNumber pattern="#0.00" /></h:outputText>
+                    </f:facet>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Proteina"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.proteina}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.unidadMedidaProteina}
+                    <f:facet name="footer">
+                        <h:outputText value="#{tablaAlimentosBean.sumatoriaProteinaPAVB}"><f:convertNumber pattern="#0.00" /></h:outputText>
+                    </f:facet>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Grasa"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.grasa}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.unidadMedidaGrasa}
+                    <f:facet name="footer">
+                        <h:outputText value="#{tablaAlimentosBean.sumatoriaGrasaPAVB}"><f:convertNumber pattern="#0.00" /></h:outputText>
+                    </f:facet>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Na"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.sodio}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.unidadMedidaSodio}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="K"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.potasio}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.unidadMedidaPotasio}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="P"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.fosforo}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.unidadMedidaFosforo}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Ca"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.calcio}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.unidadMedidaCalcio}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Fe"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.hierro}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.unidadMedidaHierro}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Colest."/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.colesterol}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.unidadMedidaColesterol}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Purinas"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.purinas}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.unidadMedidaPurinas}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Fibra"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.fibra}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.unidadMedidaFibra}
+                    <f:facet name="footer">
+                        <h:outputText value="#{tablaAlimentosBean.sumatoriaFibraPAVB}"><f:convertNumber pattern="#0.00" /></h:outputText>
+                    </f:facet>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Agua"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.agua}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.unidadMedidaAgua}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Calorias"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.calorias}"><f:convertNumber pattern="#0.00" /></h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value=" "/>
+                    </f:facet>
+                    <h:commandButton rendered="#{tablaAlimentosBean.modificarDieta ne item}"
+                                     action="#{tablaAlimentosBean.seleccionarAlimentoDieta(item)}" 
+                                     value="Editar"
+                                     style="font-size: 10px"/>
+                    <h:commandButton rendered="#{tablaAlimentosBean.modificarDieta eq item}"
+                                     action="#{tablaAlimentosBean.editarAlimentoDieta}" 
+                                     value="Guardar"
+                                     style="font-size: 10px"/>
+                    <h:commandButton action="#{tablaAlimentosBean.borrarAlimentoDieta(item.datosDieta.dietaPK.codigoDieta, item.datosDieta.dietaPK.numeroItem)}" 
+                                     value="Eliminar"
+                                     style="font-size: 10px"/>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+        <h:form prependId="false" id="formularioDetalleDietaNoPAVB">
+            <h4><h:outputText value="Alimentos no PAVB"/></h4>
+            <h:dataTable value="#{tablaAlimentosBean.tablaAlimentosNoPAVB}" 
+                         var="item" 
+                         border="1" 
+                         style="font-size: 10px">
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Unidad"/>
+                    </f:facet>
+                    <h:outputText rendered="#{tablaAlimentosBean.modificarDieta ne item}" value="#{item.datosDieta.cantidadAlimento}"/>
+                    <h:inputText rendered="#{tablaAlimentosBean.modificarDieta eq item}" value="#{tablaAlimentosBean.cantidadAlimentoModificado}" style="font-size: 10px"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Descripcion"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.descripcionAlimento}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="item"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosDieta.dietaPK.numeroItem}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Tipo"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.tipoAlimento.descripcionTipoAlimento}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Med.Casera"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.medidaCasera}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.medidaCaseraUnidad}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Cantidad"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.medidaReal}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.medidaRealUnidad}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="HC"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.hidratosCarbono}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.unidadMedidaHidratosCarbono}
+                    <f:facet name="footer">
+                        <h:outputText value="#{tablaAlimentosBean.sumatoriaHidratosCarbono}">
+                            <f:convertNumber pattern="#0.00" />
+                        </h:outputText>
+                    </f:facet>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Proteina"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.proteina}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.unidadMedidaProteina}
+                    <f:facet name="footer">
+                        <h:outputText value="#{tablaAlimentosBean.sumatoriaProteina}">
+                            <f:convertNumber pattern="#0.00" />
+                        </h:outputText>
+                    </f:facet>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Grasa"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.grasa}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.unidadMedidaGrasa}
+                    <f:facet name="footer">
+                        <h:outputText value="#{tablaAlimentosBean.sumatoriaGrasa}">
+                            <f:convertNumber pattern="#0.00" />
+                        </h:outputText>
+                    </f:facet>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Na"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.sodio}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.unidadMedidaSodio}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="K"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.potasio}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.unidadMedidaPotasio}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="P"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.fosforo}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.unidadMedidaFosforo}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Ca"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.calcio}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.unidadMedidaCalcio}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Fe"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.hierro}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.unidadMedidaHierro}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Colest."/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.colesterol}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.unidadMedidaColesterol}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Purinas"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.purinas}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.unidadMedidaPurinas}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Fibra"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.fibra}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.unidadMedidaFibra}
+                    <f:facet name="footer">
+                        <h:outputText value="#{tablaAlimentosBean.sumatoriaFibra}">
+                            <f:convertNumber pattern="#0.00" />
+                        </h:outputText>
+                    </f:facet>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Agua"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.agua}"><f:convertNumber pattern="#0.00" /></h:outputText> #{item.datosAlimento.unidadMedidaAgua}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Calorias"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.calorias}"><f:convertNumber pattern="#0.00" /></h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value=" "/>
+                    </f:facet>
+                    <h:commandButton rendered="#{tablaAlimentosBean.modificarDieta ne item}"
+                                     action="#{tablaAlimentosBean.seleccionarAlimentoDieta(item)}" 
+                                     value="Editar"
+                                     style="font-size: 10px"/>
+                    <h:commandButton rendered="#{tablaAlimentosBean.modificarDieta eq item}"
+                                     action="#{tablaAlimentosBean.editarAlimentoDieta}" 
+                                     value="Guardar"
+                                     style="font-size: 10px"/>
+                    <h:commandButton action="#{tablaAlimentosBean.borrarAlimentoDieta(item.datosDieta.dietaPK.codigoDieta, item.datosDieta.dietaPK.numeroItem)}" 
+                                     value="Eliminar"
+                                     style="font-size: 10px"/>
+                </h:column>
+            </h:dataTable>
+            <br/> 
+            <h:commandButton action="#{tablaAlimentosBean.crearReporte}" value="Crear reporte" type="submit"/>
+        </h:form>
+    </h:body>
+</html>
+
