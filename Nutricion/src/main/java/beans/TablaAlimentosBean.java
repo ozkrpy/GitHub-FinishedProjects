@@ -376,7 +376,7 @@ public class TablaAlimentosBean implements Serializable {
     public void changeListenerCampos() {
         System.out.println("Se instancio el modulo changeListenerCampos(), codigo dieta: " + codigoDieta);
         if(codigoDieta != 0) {
-            
+            agregarReferenciasDieta();
         }
     }
 
@@ -806,5 +806,11 @@ public class TablaAlimentosBean implements Serializable {
         
         return null;
 
+    }
+
+    private void agregarReferenciasDieta() {
+        System.out.println("entro a agregarReferenciasDieta para Dieta: " + codigoDieta + " HC: " + HC + ", proteina: " + proteina + ", grasas: " + grasa + ", fibra: " + fibra);
+        managerBeanLocal.actualizarReferenciaDieta(codigoDieta, HC, proteina, grasa, fibra);
+        
     }
 }

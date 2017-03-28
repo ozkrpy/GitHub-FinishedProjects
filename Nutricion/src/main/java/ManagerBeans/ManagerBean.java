@@ -16,6 +16,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 @Stateless
 public class ManagerBean implements ManagerBeanLocal {
@@ -108,7 +109,7 @@ public class ManagerBean implements ManagerBeanLocal {
         System.out.println("Ingreso al MANAGERBEAN dietasPorPaciente");
         //@NamedQuery(name = "Dieta.findAllCodigoDieta", query = "SELECT DISTINCT(d.dietaPK.codigoDieta) FROM Dieta d ORDER BY d.dietaPK.codigoDieta"),
         List recuperaDietas = em.createNamedQuery("Dieta.findAllByCodigoPaciente").setParameter("codigoPaciente", codigoPaciente).getResultList();
-        System.out.println("manager recuepero datos: " + recuperaDietas);
+        System.out.println("manager recupero datos: " + recuperaDietas);
         return recuperaDietas;
     }
 
@@ -217,15 +218,30 @@ public class ManagerBean implements ManagerBeanLocal {
 
     @Override
     public void actualizarReferenciaDieta(int codigoDieta, double hc, double proteina, double grasa, double fibra) {
-        ReferenciaXDieta ref = em.find(ReferenciaXDieta.class, codigoDieta);
-        if (ref != null) { //la referencia de la dieta existe en la tabla
+        System.out.println("Ingreso al MANAGERBEAN, actualizarReferenciaDieta (Codigo Dieta: " + codigoDieta + ", HC: " + hc + ", proteina: " + proteina + ", grasa: " + grasa + ", fibra: " + fibra);
+        ReferenciaXDieta ref;
+        int codigoDietaTemp = 0;
+
+        try { 
+            ref = em.createNamedQuery("ReferenciaXDieta.findByCodigoDieta", ReferenciaXDieta.class).setParameter("codigoDieta", codigoDieta).getSingleResult();
+            System.out.println("tras ejecucion del query" + ref.getClass().toString());
+            
             ref.setHidratosCarbono(hc);
             ref.setProteinas(proteina);
             ref.setGrasas(grasa);
             ref.setFibras(fibra);
             em.persist(ref);
-        } else {//no existe en la referencia
-            
+        } catch(Exception e) {
+            codigoDietaTemp = Integer.valueOf(em.createNamedQuery("ReferenciaXDieta.maxRefencia").getSingleResult().toString());
+            codigoDietaTemp++;
+            ref = new ReferenciaXDieta();
+            ref.setCodigoReferenciaXDieta(codigoDietaTemp);
+            ref.setCodigoDieta(codigoDieta);
+            ref.setHidratosCarbono(hc);
+            ref.setProteinas(proteina);
+            ref.setGrasas(grasa);
+            ref.setFibras(fibra);
+            em.persist(ref);
         }
 
     }

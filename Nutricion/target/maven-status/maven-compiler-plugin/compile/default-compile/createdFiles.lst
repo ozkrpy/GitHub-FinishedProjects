@@ -4,7 +4,6 @@ entities\DatosDieta.class
 entities\Alimentos_.class
 entities\ReferenciaXDieta.class
 beans\TablaAlimentosBean.class
-entities\ReferenciasDieta.class
 entities\Dieta.class
 entities\DietaPK_.class
 entities\Dieta_.class

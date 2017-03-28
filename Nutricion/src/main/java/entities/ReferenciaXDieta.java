@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ReferenciaXDieta.findAll", query = "SELECT r FROM ReferenciaXDieta r"),
+    @NamedQuery(name = "ReferenciaXDieta.maxRefencia", query = "SELECT MAX(r.codigoReferenciaXDieta) FROM ReferenciaXDieta r"),
     @NamedQuery(name = "ReferenciaXDieta.findByCodigoReferenciaXDieta", query = "SELECT r FROM ReferenciaXDieta r WHERE r.codigoReferenciaXDieta = :codigoReferenciaXDieta"),
     @NamedQuery(name = "ReferenciaXDieta.findByCodigoDieta", query = "SELECT r FROM ReferenciaXDieta r WHERE r.codigoDieta = :codigoDieta"),
     @NamedQuery(name = "ReferenciaXDieta.findByHidratosCarbono", query = "SELECT r FROM ReferenciaXDieta r WHERE r.hidratosCarbono = :hidratosCarbono"),
