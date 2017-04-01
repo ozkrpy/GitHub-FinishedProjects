@@ -714,6 +714,7 @@ public class TablaAlimentosBean implements Serializable {
             sumatoriaHidratosCarbonoPAVB = sumatoriaHidratosCarbonoPAVB + alimento.getHidratosCarbono();
             sumatoriaGrasaPAVB = sumatoriaGrasaPAVB + alimento.getGrasa();
             sumatoriaFibraPAVB = sumatoriaFibraPAVB + alimento.getFibra();
+            sumatoriaCaloriasPAVB = sumatoriaCaloriasPAVB + alimento.getCalorias();
         } else {
             tablaAlimentosNoPAVB.add(nuevaFilaDieta);
         }
@@ -780,6 +781,8 @@ public class TablaAlimentosBean implements Serializable {
         sumatoriaGrasaPAVB = 0;
         sumatoriaFibra = 0;
         sumatoriaFibraPAVB = 0;
+        sumatoriaCalorias = 0;
+        sumatoriaCaloriasPAVB = 0;
         kcalHC = 0;
         kcalProteina = 0;
         kcalGrasa = 0;
@@ -842,13 +845,13 @@ public class TablaAlimentosBean implements Serializable {
     }
 
     private void resetReferenciasMinMax() {
-        setMinHC(0);
-        setMinProteina(0);
-        setMinGrasa(0);
-        setMinFibra(0);
-        setMaxHC(0);
-        setMaxProteina(0);
-        setMaxGrasa(0);
-        setMaxFibra(0);
+        minHC = 0;
+        minProteina = 0;
+        minGrasa = 0;
+        minFibra = 0;
+        maxHC = 0;
+        maxProteina = 0;
+        maxGrasa = 0;
+        maxFibra = 0;
     }
 }
