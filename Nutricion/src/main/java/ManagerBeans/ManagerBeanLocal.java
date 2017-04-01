@@ -10,6 +10,7 @@ import entities.Alimentos;
 import entities.Dieta;
 import entities.DietaPK;
 import entities.Paciente;
+import entities.ReferenciaXDieta;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -36,4 +37,5 @@ public interface ManagerBeanLocal {
     double calcularPI(int edad, String sexo, int talla, String biotipo);
     List dietasPorPaciente(int codigoPaciente);
     void actualizarReferenciaDieta(int codigoDieta, double hc, double proteina, double grasa, double fibra);
+    ReferenciaXDieta recuperaReferencias(int codigoDieta);
 }

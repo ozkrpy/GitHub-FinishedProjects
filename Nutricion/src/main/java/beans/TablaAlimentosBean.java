@@ -12,6 +12,7 @@ import entities.DatosDieta;
 import entities.Dieta;
 import entities.DietaPK;
 import entities.Paciente;
+import entities.ReferenciaXDieta;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -515,7 +516,12 @@ public class TablaAlimentosBean implements Serializable {
         if (codigoDieta != 0) {
             actualizaListaAlimentos(codigoDieta);
             cargarDatosPaciente();
+        } else {
+            resetAllValues();
+            resetReferenciasMinMax();
         }
+        cargarDatosReferencia();
+        
     }
 
     public void changeListenerCodigoPaciente() {
@@ -778,8 +784,7 @@ public class TablaAlimentosBean implements Serializable {
         kcalProteina = 0;
         kcalGrasa = 0;
         kcalFibra = 0;
-        tablaAlimentos.removeAll(tablaAlimentos);
-        tablaAlimentosNoPAVB.removeAll(tablaAlimentosNoPAVB);
+        vaciarTablaAlimentos();
     }
 
     private void cargarListaDietas() {
@@ -812,5 +817,38 @@ public class TablaAlimentosBean implements Serializable {
         System.out.println("entro a agregarReferenciasDieta para Dieta: " + codigoDieta + " HC: " + HC + ", proteina: " + proteina + ", grasas: " + grasa + ", fibra: " + fibra);
         managerBeanLocal.actualizarReferenciaDieta(codigoDieta, HC, proteina, grasa, fibra);
         
+    }
+
+    private void cargarDatosReferencia() {
+        ReferenciaXDieta referencias = managerBeanLocal.recuperaReferencias(codigoDieta);
+        if (referencias != null) {
+            setHC(referencias.getHidratosCarbono());
+            setProteina(referencias.getProteinas());
+            setGrasa(referencias.getGrasas());
+            setFibra(referencias.getFibras());
+        } else {
+            HC = 0.0;
+            proteina = 0.0;
+            grasa = 0.0;
+            fibra = 0.0;
+            resetReferenciasMinMax();
+        }
+        
+    }
+
+    private void vaciarTablaAlimentos() {
+        tablaAlimentos.removeAll(tablaAlimentos);
+        tablaAlimentosNoPAVB.removeAll(tablaAlimentosNoPAVB);
+    }
+
+    private void resetReferenciasMinMax() {
+        setMinHC(0);
+        setMinProteina(0);
+        setMinGrasa(0);
+        setMinFibra(0);
+        setMaxHC(0);
+        setMaxProteina(0);
+        setMaxGrasa(0);
+        setMaxFibra(0);
     }
 }

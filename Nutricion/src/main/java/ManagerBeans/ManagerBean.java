@@ -246,4 +246,16 @@ public class ManagerBean implements ManagerBeanLocal {
 
     }
 
+    @Override
+    public ReferenciaXDieta recuperaReferencias(int codigoDieta) {
+        ReferenciaXDieta ref;
+        try { 
+            ref = em.createNamedQuery("ReferenciaXDieta.findByCodigoDieta", ReferenciaXDieta.class).setParameter("codigoDieta", codigoDieta).getSingleResult();
+            System.out.println("tras ejecucion del query" + ref.getClass().toString());
+        } catch (Exception e) {
+            return null;
+        }
+        return ref;
+    }
+
 }
