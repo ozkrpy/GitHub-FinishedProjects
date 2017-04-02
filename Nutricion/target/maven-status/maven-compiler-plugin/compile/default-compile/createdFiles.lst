@@ -4,6 +4,7 @@ entities\DatosDieta.class
 entities\Alimentos_.class
 entities\ReferenciaXDieta.class
 beans\TablaAlimentosBean.class
+entities\ReferenciasDieta.class
 entities\Dieta.class
 entities\DietaPK_.class
 entities\Dieta_.class
@@ -18,7 +19,6 @@ ManagerBeans\ManagerBeanLocal.class
 entities\PesoIdeal.class
 entities\Paciente.class
 entities\DietaPK.class
-reports\ReportServlet.class
 beans\DatosLaboratorialesBean.class
 entities\TipoAlimento_.class
 beans\ContexturaBean.class
