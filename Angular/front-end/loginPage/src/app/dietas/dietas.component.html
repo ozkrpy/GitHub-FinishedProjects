@@ -1,0 +1,82 @@
+<div class="form-responsive">
+  <label for="sel1">Dietas:</label>
+  <select [ngModel]="selectedObject" class="form-control" id="sel1" (ngModelChange)="updateSelectedValue($event)">
+    <option role="presentation" [value]="0">Nueva dieta</option>
+    <option role="presentation" *ngFor="let m of listaDietas | async" [value]="m.codigo_dieta">Dieta # {{ m.codigo_dieta }}</option>
+  </select>
+</div>
+
+<div class="table-responsive" [hidden]="sinDieta">
+  <h2>Alimentos</h2><p class="text-muted">Detalles de la dieta</p>
+  <button type="button" class="btn btn-info">Agregar nuevo Alimento</button>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>item</th>
+        <th>cantidad</th>
+        <th>descripcion</th>
+        <th>medida casera</th>
+        <th>medida real</th>
+        <th>hidratos carbono</th>
+        <th>proteinas</th>
+        <th>grasas</th>
+        <th>fibras</th>
+        <th [hidden]="ocultaColumnas">sodio</th>
+        <th [hidden]="ocultaColumnas">potasio</th>
+        <th [hidden]="ocultaColumnas">fosforo</th>
+        <th [hidden]="ocultaColumnas">calcio</th>
+        <th [hidden]="ocultaColumnas">hierro</th>
+        <th [hidden]="ocultaColumnas">colesterol</th>
+        <th [hidden]="ocultaColumnas">purinas</th>
+        <th [hidden]="ocultaColumnas">agua</th>
+        <th>calorias</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of alimentos | async">
+        <td>{{ a.dieta.numero_item }}</td>
+        <td>{{ a.dieta.cantidad_alimento }}</td>
+        <td>{{ a.alimento.descripcion_alimento }}</td>
+        <td>{{ a.alimento.medida_casera }} {{ a.alimento.medida_casera_unidad }}</td>
+        <td>{{ a.alimento.medida_real }} {{ a.alimento.medida_real_unidad }}</td>
+        <td>{{ a.alimento.hidratos_carbono | multiplicador:a.dieta.cantidad_alimento | number: '1.1-2' }} {{ a.alimento.unidad_medida_hidratos_carbono }}</td>
+        <td>{{ a.alimento.proteina  | multiplicador:a.dieta.cantidad_alimento | number: '1.1-2' }} {{ a.alimento.unidad_medida_proteina }}</td>
+        <td>{{ a.alimento.grasa | multiplicador:a.dieta.cantidad_alimento | number: '1.1-2' }} {{ a.alimento.unidad_medida_grasa }}</td>
+        <td>{{ a.alimento.fibra | multiplicador:a.dieta.cantidad_alimento | number: '1.1-2' }} {{ a.alimento.unidad_medida_fibra }}</td>
+        <td [hidden]="ocultaColumnas">{{ a.alimento.sodio | multiplicador:a.dieta.cantidad_alimento | number: '1.1-2' }} {{ a.alimento.unidad_medida_sodio }}</td>        
+        <td [hidden]="ocultaColumnas">{{ a.alimento.potasio | multiplicador:a.dieta.cantidad_alimento | number: '1.1-2' }} {{ a.alimento.unidad_medida_potasio }}</td>        
+        <td [hidden]="ocultaColumnas">{{ a.alimento.fosforo | multiplicador:a.dieta.cantidad_alimento | number: '1.1-2' }} {{ a.alimento.unidad_medida_fosforo }}</td>        
+        <td [hidden]="ocultaColumnas">{{ a.alimento.calcio | multiplicador:a.dieta.cantidad_alimento | number: '1.1-2' }} {{ a.alimento.unidad_medida_calcio }}</td>        
+        <td [hidden]="ocultaColumnas">{{ a.alimento.hierro | multiplicador:a.dieta.cantidad_alimento | number: '1.1-2' }} {{ a.alimento.unidad_medida_hierro }}</td>        
+        <td [hidden]="ocultaColumnas">{{ a.alimento.colesterol | multiplicador:a.dieta.cantidad_alimento | number: '1.1-2' }} {{ a.alimento.unidad_medida_colesterol }}</td>        
+        <td [hidden]="ocultaColumnas">{{ a.alimento.purinas | multiplicador:a.dieta.cantidad_alimento | number: '1.1-2' }} {{ a.alimento.unidad_medida_purinas }}</td>        
+        <td [hidden]="ocultaColumnas">{{ a.alimento.agua | multiplicador:a.dieta.cantidad_alimento | number: '1.1-2' }} {{ a.alimento.unidad_medida_agua }}</td>        
+        <td>{{ a.alimento.calorias | multiplicador:a.dieta.cantidad_alimento | number: '1.1-2' }} {{ a.alimento.unidad_medida_calorias }}</td>        
+        <td><Button type="button" class="btn btn-primary" (click)="mostrarColumnas()"> {{ ocultaColumnas ? 'Mostrar todo' : 'Ocultar detalles'}}</Button></td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th>{{ sumaHidratos | number: '1.1-2' }} g</th>
+        <th>{{ sumaProteinas | number: '1.1-2'  }}  g</th>
+        <th>{{ sumaGrasas | number: '1.1-2' }} g</th>
+        <th>{{ sumaFibras | number: '1.1-2' }} g</th>
+        <th [hidden]="ocultaColumnas"></th>
+        <th [hidden]="ocultaColumnas"></th>
+        <th [hidden]="ocultaColumnas"></th>
+        <th [hidden]="ocultaColumnas"></th>
+        <th [hidden]="ocultaColumnas"></th>
+        <th [hidden]="ocultaColumnas"></th>
+        <th [hidden]="ocultaColumnas"></th>
+        <th [hidden]="ocultaColumnas"></th>
+        <th>{{ sumaCalorias | number: '1.1-2' }}</th>
+      </tr>
+    </tfoot>
+  </table>
+</div>
