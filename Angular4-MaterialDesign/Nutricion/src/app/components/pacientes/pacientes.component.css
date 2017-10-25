@@ -1,0 +1,25 @@
+.estilo-caja {
+    display: inline-block;
+    width: 45%;
+    margin: 5px;
+    vertical-align: top;
+    cursor: pointer;
+}
+
+small {
+    color: #A9A9BB;
+}
+
+table {
+    text-align: left;
+}
+
+md-card-content {
+    align-content: center;
+}
+
+.mat-headline {
+    font-size: 16pt;
+    font-weight: bold; 
+}
+

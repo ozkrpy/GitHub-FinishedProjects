@@ -1,0 +1,45 @@
+h2 {
+    margin-bottom: 5px;
+}
+
+mat-expansion-panel {
+    margin-bottom: 4px;
+}
+
+.name_input {
+    width: 13px;
+}
+
+.checkboxes {
+    width: 100%;    
+    margin-bottom: 10px;
+}
+
+.cb_individual {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.width_fifth {
+    width: 19%;
+}
+
+.width_quarter {
+    width: 23%;
+}
+
+.width_third {
+    width: 32%;
+}
+
+.width_half {
+    width: 48%;
+}
+
+.width_full {
+    width: 98%;
+}
+
+small {
+    color: #A9A9BB;
+}

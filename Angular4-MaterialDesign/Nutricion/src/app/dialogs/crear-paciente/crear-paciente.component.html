@@ -1,0 +1,254 @@
+<div style="text-align:center">
+  <mat-horizontal-stepper [linear]="isLinear">
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Datos Personales</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="Nombres" formControlName="nombre" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Apellidos" formControlName="apellido" required>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Sexo" formControlName="sexo" required>
+            <mat-option *ngFor="let sexo of sexos" [value]="sexo.valor">
+              {{sexo.facevalue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Estado civil" formControlName="civil" required>
+            <mat-option *ngFor="let estado of estadosCiviles" [value]="estado.valor">
+              {{estado.facevalue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento" formControlName="nacimiento" required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker touchUi="true"></mat-datepicker>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Siguiente
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Talla, Peso, Biotipo</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="Talla (cm.)" formControlName="talla" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Peso Actual (Kg.)" formControlName="actual" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Peso Habitual (Kg.)" formControlName="habitual">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Cia. muñeca (cm.)" formControlName="muneca" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Cia. brazo (cm.)" formControlName="brazo" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Cia. cintura 1 (cm.)" formControlName="cintura1" required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Cia. cintura 2 (cm.)" formControlName="cintura2" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>
+            <mat-icon>keyboard_arrow_left</mat-icon>Anterior</button>
+          <button mat-button matStepperNext>Siguiente
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="thirdFormGroup">
+      <form [formGroup]="thirdFormGroup">
+        <ng-template matStepLabel>Antecedentes, medicacion</ng-template>
+        <section class="checkboxes">
+          <mat-checkbox class="cb_individual" formControlName="obesidad">Obesidad</mat-checkbox>
+          <mat-checkbox class="cb_individual" formControlName="cardiopatias">Cardiopatias</mat-checkbox>
+          <mat-checkbox class="cb_individual" formControlName="hta">HTA</mat-checkbox>
+          <mat-checkbox class="cb_individual" formControlName="diabetes">Diabetes</mat-checkbox>
+        </section>
+        <mat-form-field class="width_third">
+          <input matInput formControlName="medicacion" maxlength="1000" placeholder="Medicacion" #medicacion>
+          <mat-hint align="start">
+            <strong>Farmacos que haya consumido.</strong>
+          </mat-hint>
+          <mat-hint align="end">{{medicacion.value.length}} / 1000</mat-hint>
+        </mat-form-field>
+        <mat-form-field class="width_third">
+          <input matInput formControlName="medico" maxlength="1000" placeholder="Diagnostico medico" #medico>
+          <mat-hint align="start">
+            <strong>Diagnostico del clinico tratante.</strong>
+          </mat-hint>
+          <mat-hint align="end">{{medico.value.length}} / 1000</mat-hint>
+        </mat-form-field>
+        <mat-form-field class="width_third">
+          <input matInput formControlName="nutricionista" maxlength="1000" placeholder="Diagnostico nutricional" #nutricional>
+          <mat-hint align="start">
+            <strong>Informacion relevante a su estado nutricional.</strong>
+          </mat-hint>
+          <mat-hint align="end">{{nutricional.value.length}} / 1000</mat-hint>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>
+            <mat-icon>keyboard_arrow_left</mat-icon>Anterior</button>
+          <button mat-button matStepperNext>Siguiente
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="fourthFormGroup" Optional>
+      <form [formGroup]="fourthFormGroup">
+        <ng-template matStepLabel>Datos Laboratoriales</ng-template>
+        <mat-form-field class="width_fifth">
+          <input matInput placeholder="Glicemia Basal" formControlName="glicemiaBasal">
+        </mat-form-field>
+        <mat-form-field class="width_fifth">
+          <input matInput placeholder="Creatinina" formControlName="creatinina">
+        </mat-form-field>
+        <mat-form-field class="width_fifth">
+          <input matInput placeholder="Proteinas totales" formControlName="proteinasTotales">
+        </mat-form-field>
+        <mat-form-field class="width_fifth">
+          <input matInput placeholder="Urea" formControlName="urea">
+        </mat-form-field>
+        <mat-form-field class="width_fifth">
+          <input matInput placeholder="Acido urico" formControlName="acidoUrico">
+        </mat-form-field>
+        <mat-form-field class="width_fifth">
+          <input matInput placeholder="Proteinura" formControlName="proteinura">
+        </mat-form-field>
+        <mat-form-field class="width_fifth">
+          <input matInput placeholder="Albumina" formControlName="albumina">
+        </mat-form-field>
+        <mat-form-field class="width_fifth">
+          <input matInput placeholder="Trigliceridos" formControlName="trigliceridos">
+        </mat-form-field>
+        <mat-form-field class="width_fifth">
+          <input matInput placeholder="LDL" formControlName="ldl">
+        </mat-form-field>
+        <mat-form-field class="width_fifth">
+          <input matInput placeholder="HDL" formControlName="hdl">
+        </mat-form-field>
+        <mat-form-field class="width_fifth">
+          <input matInput placeholder="Colesterol total" formControlName="colesterolTotal">
+        </mat-form-field>
+        <mat-form-field class="width_fifth">
+          <input matInput placeholder="Glucosa" formControlName="glucosa">
+        </mat-form-field>
+        <mat-form-field class="width_fifth">
+          <input matInput placeholder="HB" formControlName="hb">
+        </mat-form-field>
+        <mat-form-field class="width_fifth">
+          <input matInput placeholder="Hematocrito" formControlName="hematocrito">
+        </mat-form-field>
+        <mat-form-field class="width_fifth">
+          <input matInput placeholder="Gobulos rojos" formControlName="globulosRojos">
+        </mat-form-field>
+        <mat-form-field class="width_fifth">
+          <input matInput placeholder="Globulos blancos" formControlName="globulosBlancos">
+        </mat-form-field>
+        <mat-form-field class="width_fifth">
+          <input matInput placeholder="Potasio" formControlName="potasio">
+        </mat-form-field>
+        <mat-form-field class="width_fifth">
+          <input matInput placeholder="CI" formControlName="ci">
+        </mat-form-field>
+        <mat-form-field class="width_fifth">
+          <input matInput placeholder="Sodio" formControlName="sodio">
+        </mat-form-field>
+        <mat-form-field class="width_fifth">
+          <input matInput placeholder="HBA" formControlName="hba">
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>
+            <mat-icon>keyboard_arrow_left</mat-icon>Anterior</button>
+          <button mat-button (click)="generarPaciente()" matStepperNext>Siguiente
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Completado</ng-template>
+      <p class="titulo">Carga del paciente completada.</p>
+      <p class="subtitulo">
+        <strong>Favor verifique que los datos sean correctos</strong>
+      </p>
+      <mat-progress-spinner *ngIf="loading" mode="indeterminate"></mat-progress-spinner>
+      <div *ngIf="showPaciente">
+        <table>
+          <tr>
+            <th>
+              <strong>Informacion personal</strong>
+            </th>
+            <th>
+              <strong>Perfil nutricional</strong>
+            </th>
+            <th>
+              <strong>Antecedentes</strong>
+            </th>
+            <th>
+              <strong>Laboratorios</strong>
+            </th>
+          </tr>
+          <tr>
+            <td>
+              <strong>Nombres:</strong> {{ paciente.nombre }} {{ paciente.apellido }}
+              <br> <strong>Sexo:</strong> {{ paciente.sexo == 'M' ? 'Masculino' : 'Femenino' }}
+              <br> <strong>Estado Civil:</strong> {{ paciente.estado_civil }}
+              <br> <strong>Fecha de Nacimiento:</strong> {{ paciente.fecha_nacimiento | date:"dd/MM/yyyy" }}
+            </td>
+            <td>
+              <strong>Talla:</strong> {{ paciente.talla }} cm.
+              <br> <strong>Peso actual:</strong> {{ paciente.peso_actual }} kg., <strong>Habitual:</strong> {{ paciente.peso_habitual }} kg.
+              <br> <strong>Saludable:</strong> {{ paciente.peso_saludable | number:'1.1-2' }} kg., <strong>Ajustado:</strong> {{ paciente.peso_ajusta | number:'1.1-2' }} kg.
+              <br> <strong>% de Peso Ideal:</strong> {{ paciente.porcentaje_peso_ideal | number:'1.1-2' }} %
+              <br> <strong>IMC:</strong> {{ paciente.imc | number:'1.1-2' }}, <strong>Contextura:</strong> {{ paciente.biotipo }}
+              <br> <strong>Cia. muneca:</strong> {{ paciente.cia_muneca }} cm., <strong>brazo:</strong> {{ paciente.cia_brazo }} cm.
+              <br> <strong>Cintura 1:</strong> {{ paciente.cia_cintura1 }} cm., <strong>Cintura 2:</strong> {{ paciente.cia_cintura2 }} cm.
+            </td>
+            <td>
+              <strong>Obesidad:</strong> {{ paciente.antecedente_obesidad ? 'Si' : 'No' }}
+              <br> <strong>Cardiopatias:</strong> {{ paciente.antecedente_cardiopatias ? 'Si' : 'No' }}
+              <br> <strong>HTA:</strong> {{ paciente.antecedente_hta ? 'Si' : 'No' }}
+              <br> <strong>Diabetes:</strong> {{ paciente.antecedente_diabetes ? 'Si' : 'No' }}
+              <br> <strong>Medicacion:</strong> {{ paciente.medicacion == '' ? 'Sin informacion' : paciente.medicacion }}
+              <br> <strong>Diagnostico Medico:</strong> {{ paciente.diagnostico_medico == '' ? 'Sin informacion' : paciente.diagnostico_medico }}
+              <br> <strong>Diagnostico Nutricional:</strong> {{ paciente.diagnostico_nutricional == '' ? 'Sin informacion' : paciente.diagnostico_nutricional}}
+            </td>
+            <td>
+              <strong>Glicemia:</strong> {{ paciente.laboratorio_glicemia_basal }}, <strong>Creatinina:</strong> {{ paciente.laboratorio_creatinina }}
+              <br> <strong>Proteinas Totales:</strong> {{ paciente.laboratorio_proteinas_totales }}, <strong>Proteinura:</strong> {{ paciente.laboratorio_proteinuria }}
+              <br> <strong>Urea:</strong> {{ paciente.laboratorio_urea }}, <strong>Acido urico:</strong> {{ paciente.laboratorio_acido_urico }}
+              <br> <strong>Albumina:</strong> {{ paciente.laboratorio_albumina }}, <strong>HBA:</strong> {{ paciente.laboratorio_hba }}
+              <br> <strong>Colest. total:</strong> {{ paciente.laboratorio_colesterol_total }}, <strong>LDL:</strong> {{ paciente.laboratorio_ldl }}, <strong>HDL:</strong> {{ paciente.laboratorio_hdl }}
+              <br> <strong>Triglicerios:</strong> {{ paciente.laboratorio_triglicerios }}, <strong>Glucosa:</strong> {{ paciente.laboratorio_glucosa }}
+              <br> <strong>HB:</strong> {{ paciente.laboratorio_hb }}, <strong>Hematocrito:</strong> {{ paciente.laboratorio_hematocrito }}
+              <br> <strong>Potasio:</strong> {{ paciente.laboratorio_potasio }}, <strong>CI:</strong> {{ paciente.laboratorio_ci }}, <strong>Sodio:</strong> {{ paciente.laboratorio_na }}
+              <br> <strong>Globulos rojos:</strong> {{ paciente.laboratorio_globulos_rojos }}, <strong>Blancos:</strong> {{ paciente.laboratorio_globulos_blancos }}
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div>
+        <button mat-button matStepperPrevious>
+          <mat-icon>keyboard_arrow_left</mat-icon>Anterior</button>
+        <button mat-button (click)="crearPaciente()">
+          <mat-icon>face</mat-icon>Guardar paciente</button>
+        <button mat-button>
+          <mat-icon>cancel</mat-icon>Cancelar</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

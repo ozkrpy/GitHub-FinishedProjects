@@ -1,0 +1,28 @@
+<div>
+  <br>
+  <button mat-raised-button color="primary" (click)="agregarPaciente()">AGREGAR NUEVO PACIENTE</button>
+</div>
+<br>
+<mat-card class="estilo-caja" *ngFor="let p of todosLosPacientes | async" #value>
+  <mat-card-header>
+    <div mat-card-avatar>
+      <mat-icon>accessibility</mat-icon>
+    </div>
+    <mat-card-title class="mat-headline"> 
+      {{ p.apellido | uppercase }}, {{ p.nombre | uppercase }} 
+    </mat-card-title>
+    <mat-card-subtitle>{{ p.talla }} cm., {{ p.peso_actual }} kg., IMC: {{ p.imc | number:'1.1-2'}}(Contextura <strong>{{ p.biotipo }}</strong>)</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>El paciente cuenta con un peso habitual de <strong>{{ p.peso_habitual | number:'1.1-2' }} kg.</strong>, su peso ajustado <strong>{{ p.peso_ajusta
+      | number:'1.1-2' }} kg.</strong> o un peso saludable de <strong>{{ p.peso_saludable | number:'1.1-1' }} kg.</strong> y con un porcentaje de peso
+      ideal igual a <strong>{{ p.porcentaje_peso_ideal | number:'1.1-2' }}%</strong>.
+    </p>
+    <table>
+      <button mat-button color="primary" (click)="verDetallesPaciente(p.codigo_paciente)">Toda la informacion...</button>
+    </table>
+  </mat-card-content>
+  <mat-card-footer>
+    <small class="texto-claro">Ultima dieta creada: dd/MM/aaaa</small>
+  </mat-card-footer>
+</mat-card>
